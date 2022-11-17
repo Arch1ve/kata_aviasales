@@ -1,0 +1,55 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  background-color: #fff;
+  width: 230px;
+  height: 252px;
+  padding-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  margin-left: 20px;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  line-height: 12px;
+}
+
+.label {
+  padding: 10px 0px 10px 20px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.label:hover {
+  background-color: #F1FCFF;
+  cursor: pointer;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.span {
+  display: flex;
+  align-items: center;
+}
+
+.span::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #9ABBCE;
+  border-radius: 2px;
+}
+
+input:checked+.span::before {
+  background: center center url(./img/Shape.svg) no-repeat;
+  border-color: #2196F3;
+}
