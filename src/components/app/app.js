@@ -2,6 +2,7 @@ import React from 'react'
 
 import Filters from '../filters'
 import Tabs from '../tabs/tabs'
+import CardList from '../card-list'
 
 import '../../scss/style.scss'
 import styles from './app.module.scss'
@@ -19,6 +20,8 @@ const App = () => {
         <Filters />
         <main className={styles.main}>
           <Tabs />
+          <CardList />
+          <button className={styles['more-button']}>Показать еще 5 билетов!</button>
         </main>
       </div>
     </React.Fragment>

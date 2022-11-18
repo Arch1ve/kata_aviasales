@@ -1,4 +1,5 @@
 .tabs {
+  margin-bottom: 20px;
   width: 500px;
   border-radius: 10px;
   background-color: #fff;
@@ -8,6 +9,7 @@
 
 .button {
   font-size: 12px;
+  font-weight: 600;
   border: none;
   color: inherit;
   width: 100%;
@@ -20,7 +22,17 @@
   cursor: pointer;
 }
 
-.selected {
+.list-item {
+  flex-grow: 1;
+  height: 50px;
+  border: 1px solid #DFE5EC;
+}
+
+.list-item:hover {
+  background-color: #F1FCFF;
+}
+
+.list-item.selected {
   background-color: #2196F3;
   border-color: #2196F3;
   color: #fff;
@@ -30,11 +42,7 @@
   display: flex;
 }
 
-.list-item {
-  flex-grow: 1;
-  height: 50px;
-  border: 1px solid #DFE5EC;
-}
+
 
 .list-item:nth-child(2) {
   border-inline: none;
