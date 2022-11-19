@@ -59,6 +59,10 @@
   background-color: #2196F3;
   border-color: #2196F3;
   color: #fff;
+
+  &:active {
+    background-color: #007be1;
+  }
 }
 
 .list {
