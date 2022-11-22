@@ -1,11 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import * as actions from '../../actions/filters-actions'
 
 import styles from './filters.module.scss'
 
-const Filters = ({ all, noTransfer, oneTransfer, twoTransfers, threeTransfers, filters }) => {
+const Filters = () => {
+  const dispatch = useDispatch()
+  const { all, noTransfer, oneTransfer, twoTransfers, threeTransfers } = bindActionCreators(actions, dispatch)
+  const filters = useSelector((state) => state.filters)
   return (
     <aside className={styles.filters}>
       <h2 className={styles.title}>Количество пересадок</h2>
@@ -73,8 +77,4 @@ const Filters = ({ all, noTransfer, oneTransfer, twoTransfers, threeTransfers, f
   )
 }
 
-const mapStateToProps = ({ filters }) => {
-  return { filters: filters }
-}
-
-export default connect(mapStateToProps, actions)(Filters)
+export default Filters

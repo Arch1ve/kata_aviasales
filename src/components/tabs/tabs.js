@@ -1,12 +1,16 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
+import { bindActionCreators } from 'redux'
 
 import * as actions from '../../actions/tabs-actions'
 
 import styles from './tabs.module.scss'
 
-const Tabs = ({ cheap, fast, optimal, selected = 'cheap' }) => {
+const Tabs = () => {
+  const dispatch = useDispatch()
+  const { cheap, fast, optimal } = bindActionCreators(actions, dispatch)
+  const selected = useSelector((state) => state.tabs)
   return (
     <nav className={styles.tabs}>
       <ul className={styles.list}>
@@ -30,10 +34,4 @@ const Tabs = ({ cheap, fast, optimal, selected = 'cheap' }) => {
   )
 }
 
-const mapStateToProps = ({ tabs }) => {
-  return {
-    selected: tabs,
-  }
-}
-
-export default connect(mapStateToProps, actions)(Tabs)
+export default Tabs
