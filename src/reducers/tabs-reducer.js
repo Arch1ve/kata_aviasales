@@ -1,4 +1,4 @@
-export default function tabs(state = 'cheap', action) {
+export default function tabs(state = '', action) {
   switch (action.type) {
     case 'CHEAP':
       return 'cheap'

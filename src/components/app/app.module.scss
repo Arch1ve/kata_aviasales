@@ -28,6 +28,11 @@
   flex-direction: column;
   width: 100%;
   align-items: center;
+
+  @media (max-width: 767px) {
+    padding: 0 20px;
+    margin-bottom: 40px;
+  }
 }
 
 .more-button {
@@ -44,5 +49,28 @@
 
   @media (max-width: 767px) {
     width: calc(100% - 40px);
+  }
+}
+
+.warning {
+  width: 100%;
+  max-width: 500px;
+  height: 100px;
+  padding: 20px;
+  padding-left: 60px;
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: 11px 15px;
+  background-color: #fff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #DFE5EC;
+  border-radius: 5px;
+
+  &--network {
+    background-image: url(./img/network-error.svg);
+  }
+
+  &--not-found {
+    background-image: url(./img/not-found-error.svg);
   }
 }

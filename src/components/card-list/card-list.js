@@ -10,11 +10,12 @@ import styles from './card-list.module.scss'
 
 const CardList = () => {
   const dispatch = useDispatch()
-  const { loading, tickets } = useSelector((state) => state.tickets)
+  const { loading, tickets, errorCount } = useSelector((state) => state.tickets)
   useEffect(() => {
-    dispatch(fetchTickets())
-  }, [])
-  console.log(tickets)
+    if (loading) {
+      dispatch(fetchTickets())
+    }
+  }, [tickets, errorCount])
   const items = tickets.slice(0, 5).map((el) => {
     return <Card key={v4()} data={el} />
   })
