@@ -1,14 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { v4 } from 'uuid'
 
 import Card from '../card'
+import Loader from '../loader'
+import { fetchTickets } from '../../actions/tickets-actions'
 
 import styles from './card-list.module.scss'
 
 const CardList = () => {
-  const items = [1, 2, 3, 4, 5].map((el) => {
-    return <Card key={el} />
+  const dispatch = useDispatch()
+  const { loading, tickets } = useSelector((state) => state.tickets)
+  useEffect(() => {
+    dispatch(fetchTickets())
+  }, [])
+  console.log(tickets)
+  const items = tickets.map((el) => {
+    return <Card key={v4()} data={el} />
   })
-  return <ul className={styles.list}>{items}</ul>
+
+  return (
+    <>
+      {loading ? <Loader /> : null}
+      <ul className={styles.list}>{items}</ul>
+    </>
+  )
 }
 
 export default CardList

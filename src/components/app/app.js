@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Filters from '../filters'
 import Tabs from '../tabs/tabs'
@@ -9,6 +9,11 @@ import styles from './app.module.scss'
 import logo from './img/Logo.svg'
 
 const App = () => {
+  useEffect(() => {
+    fetch('https://aviasales-test-api.kata.academy/search')
+      .then((res) => res.json())
+      .then(({ searchId }) => sessionStorage.setItem('searchId', searchId))
+  }, [])
   return (
     <React.Fragment>
       <header className={styles.header}>
