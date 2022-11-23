@@ -15,7 +15,7 @@ const CardList = () => {
     dispatch(fetchTickets())
   }, [])
   console.log(tickets)
-  const items = tickets.map((el) => {
+  const items = tickets.slice(0, 5).map((el) => {
     return <Card key={v4()} data={el} />
   })
 
