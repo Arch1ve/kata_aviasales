@@ -6,10 +6,7 @@ function checkAll(obj) {
   return { ...obj, all: true }
 }
 
-export default function filters(
-  state = { all: false, noTransfer: false, one: false, two: false, three: false },
-  action
-) {
+export default function filters(state = { all: true, noTransfer: true, one: true, two: true, three: true }, action) {
   const checked = action.checked == true
   switch (action.type) {
     case 'ALL':

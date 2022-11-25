@@ -4,19 +4,24 @@ import { v4 } from 'uuid'
 
 import Card from '../card'
 import Loader from '../loader'
-import { fetchTickets } from '../../actions/tickets-actions'
+import { fetchTickets, sortByTab } from '../../actions/tickets-actions'
 
 import styles from './card-list.module.scss'
 
 const CardList = () => {
   const dispatch = useDispatch()
-  const { loading, tickets, errorCount } = useSelector((state) => state.tickets)
+  const { loading, tickets, errorCount, showed, current } = useSelector((state) => state.tickets)
+  const { filters, tabs } = useSelector((state) => state)
   useEffect(() => {
     if (loading) {
       dispatch(fetchTickets())
     }
   }, [tickets, errorCount])
-  const items = tickets.slice(0, 5).map((el) => {
+  useEffect(() => {
+    dispatch(sortByTab(tabs))
+  }, [filters, tabs])
+  const source = current.length > 0 ? current : tickets
+  const items = source.slice(0, showed).map((el) => {
     return <Card key={v4()} data={el} />
   })
 
