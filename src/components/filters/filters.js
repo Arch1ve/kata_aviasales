@@ -1,15 +1,24 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import * as actions from '../../actions/filters-actions'
+import { setTransfers } from '../../store/tickets'
 
 import styles from './filters.module.scss'
 
+function checkAll(obj) {
+  const filteredEntries = Object.entries(obj).filter((el) => el[0] != 'all')
+  for (let i of filteredEntries) {
+    if (i[1] == false) return { ...obj, all: false }
+  }
+  return { ...obj, all: true }
+}
+
 const Filters = () => {
   const dispatch = useDispatch()
-  const { all, noTransfer, oneTransfer, twoTransfers, threeTransfers } = bindActionCreators(actions, dispatch)
-  const filters = useSelector((state) => state.filters)
+  const [filters, setFilters] = useState({ all: true, 0: true, 1: true, 2: true, 3: true })
+  useEffect(() => {
+    dispatch(setTransfers(filters))
+  }, [filters])
   return (
     <aside className={styles.filters}>
       <h2 className={styles.title}>Количество пересадок</h2>
@@ -18,7 +27,14 @@ const Filters = () => {
           type="checkbox"
           className={styles.input}
           id="filter-all"
-          onChange={() => all(!filters.all)}
+          onChange={() =>
+            setFilters((filters) => {
+              if (filters.all) {
+                return { all: false, 0: false, 1: false, 2: false, 3: false }
+              }
+              return { all: true, 0: true, 1: true, 2: true, 3: true }
+            })
+          }
           checked={filters.all}
         />
         <span htmlFor="filter-all" className={styles.span}>
@@ -30,8 +46,8 @@ const Filters = () => {
           type="checkbox"
           className={styles.input}
           id="filter-no-transfer"
-          onChange={() => noTransfer(!filters.noTransfer)}
-          checked={filters.noTransfer}
+          onChange={() => setFilters((filters) => checkAll({ ...filters, 0: !filters['0'] }))}
+          checked={filters['0']}
         />
         <span htmlFor="filter-no-transfer" className={styles.span}>
           Без пересадок
@@ -42,8 +58,8 @@ const Filters = () => {
           type="checkbox"
           className={styles.input}
           id="filter-one-transfer"
-          onChange={() => oneTransfer(!filters.one)}
-          checked={filters.one}
+          onChange={() => setFilters((filters) => checkAll({ ...filters, 1: !filters['1'] }))}
+          checked={filters['1']}
         />
         <span htmlFor="filter-one-transfer" className={styles.span}>
           1 пересадка
@@ -54,8 +70,8 @@ const Filters = () => {
           type="checkbox"
           className={styles.input}
           id="filter-two-transfers"
-          onChange={() => twoTransfers(!filters.two)}
-          checked={filters.two}
+          onChange={() => setFilters((filters) => checkAll({ ...filters, 2: !filters['2'] }))}
+          checked={filters['2']}
         />
         <span htmlFor="filter-two-transfers" className={styles.span}>
           2 пересадки
@@ -66,8 +82,8 @@ const Filters = () => {
           type="checkbox"
           className={styles.input}
           id="filter-three-transfers"
-          onChange={() => threeTransfers(!filters.three)}
-          checked={filters.three}
+          onChange={() => setFilters((filters) => checkAll({ ...filters, 3: !filters['3'] }))}
+          checked={filters['3']}
         />
         <span htmlFor="filter-three-transfers" className={styles.span}>
           3 пересадки
@@ -77,4 +93,4 @@ const Filters = () => {
   )
 }
 
-export default Filters
+export default React.memo(Filters)

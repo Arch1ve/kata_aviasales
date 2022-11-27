@@ -1,8 +1,8 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 
-import reducer from './reducer'
+import tickets from './tickets'
 
-const rootReducer = combineReducers({ reducer })
+const rootReducer = combineReducers({ tickets })
 
 const store = configureStore({
   reducer: rootReducer,

@@ -1,31 +1,47 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
 import classNames from 'classnames'
-import { bindActionCreators } from 'redux'
+import { useDispatch } from 'react-redux'
 
-import * as actions from '../../actions/tabs-actions'
+import { sortByPrice, sortBySpeed, sortByOptimal } from '../../store/tickets'
 
 import styles from './tabs.module.scss'
 
 const Tabs = () => {
   const dispatch = useDispatch()
-  const { cheap, fast, optimal } = bindActionCreators(actions, dispatch)
-  const selected = useSelector((state) => state.tabs)
+  const [selected, setSelected] = useState('')
   return (
     <nav className={styles.tabs}>
       <ul className={styles.list}>
         <li className={classNames(styles['list-item'], { [styles.selected]: selected == 'cheap' })}>
-          <button className={styles.button} onClick={cheap}>
+          <button
+            className={styles.button}
+            onClick={() => {
+              setSelected('cheap')
+              dispatch(sortByPrice())
+            }}
+          >
             Самый дешевый
           </button>
         </li>
         <li className={classNames(styles['list-item'], { [styles.selected]: selected == 'fast' })}>
-          <button className={styles.button} onClick={fast}>
+          <button
+            className={styles.button}
+            onClick={() => {
+              setSelected('fast')
+              dispatch(sortBySpeed())
+            }}
+          >
             Самый быстрый
           </button>
         </li>
         <li className={classNames(styles['list-item'], { [styles.selected]: selected == 'optimal' })}>
-          <button className={styles.button} onClick={optimal}>
+          <button
+            className={styles.button}
+            onClick={() => {
+              setSelected('optimal')
+              dispatch(sortByOptimal())
+            }}
+          >
             Оптимальный
           </button>
         </li>
@@ -34,4 +50,4 @@ const Tabs = () => {
   )
 }
 
-export default Tabs
+export default React.memo(Tabs)

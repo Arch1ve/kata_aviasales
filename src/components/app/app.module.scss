@@ -46,7 +46,12 @@
   text-transform: uppercase;
   color: #fff;
   font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
+
+  &:active {
+    background-color: #007be1;
+  }
 
   @media (max-width: 767px) {
     width: calc(100% - 40px);

@@ -1,5 +1,0 @@
-export const all = (checked) => ({ type: 'ALL', checked })
-export const noTransfer = (checked) => ({ type: 'NO_TRANSFER', checked })
-export const oneTransfer = (checked) => ({ type: 'ONE_TRANSFER', checked })
-export const twoTransfers = (checked) => ({ type: 'TWO_TRANSFERS', checked })
-export const threeTransfers = (checked) => ({ type: 'THREE_TRANSFERS', checked })

@@ -4,26 +4,45 @@ import { v4 } from 'uuid'
 
 import Card from '../card'
 import Loader from '../loader'
-import { fetchTickets, sortByTab } from '../../actions/tickets-actions'
+import { fetchTickets } from '../../store/tickets'
 
 import styles from './card-list.module.scss'
 
+const transfersToArr = (obj) => {
+  return obj.segments.reduce((acc, el) => {
+    acc.push(el.stops.length)
+    return acc
+  }, [])
+}
+
+const ticketsFilterCallback = (filters) => {
+  const displayAll = filters.all
+  return (el) => {
+    if (displayAll) return true
+    const filtersArr = Object.entries(filters).reduce((acc, el) => {
+      if (el[1]) acc.push(Number(el[0]))
+      return acc
+    }, [])
+    const transArr = transfersToArr(el)
+    if (filtersArr.includes(transArr[0]) && filtersArr.includes(transArr[1])) return true
+    return false
+  }
+}
+
 const CardList = () => {
   const dispatch = useDispatch()
-  const { loading, tickets, errorCount, showed, current } = useSelector((state) => state.tickets)
-  const { filters, tabs } = useSelector((state) => state)
+  const { loading, tickets, errorCount, showed, transfers } = useSelector((state) => state.tickets)
   useEffect(() => {
     if (loading) {
       dispatch(fetchTickets())
     }
   }, [tickets, errorCount])
-  useEffect(() => {
-    dispatch(sortByTab(tabs))
-  }, [filters, tabs])
-  const source = current.length > 0 ? current : tickets
-  const items = source.slice(0, showed).map((el) => {
-    return <Card key={v4()} data={el} />
-  })
+  const items = tickets
+    .filter(ticketsFilterCallback(transfers))
+    .slice(0, showed)
+    .map((el) => {
+      return <Card key={v4()} data={el} />
+    })
 
   return (
     <>
@@ -33,4 +52,4 @@ const CardList = () => {
   )
 }
 
-export default CardList
+export default React.memo(CardList)
